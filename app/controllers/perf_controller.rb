@@ -8,8 +8,9 @@ class PerfController < ApplicationController
   # Simulate I/O wait (not CPU). Param s = seconds.
   def slow
     delay = params.fetch(:s, "0.2").to_f
+    random_guid = SecureRandom.uuid
     sleep delay
-    render json: { ok: true, slept: delay }
+    render json: { ok: true, slept: delay, guid: random_guid }
   end
 
   # Chunked stream / simple SSE-ish output to visualize multiplexing
