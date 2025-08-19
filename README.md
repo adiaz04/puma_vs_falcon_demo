@@ -1,24 +1,39 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Running the Demo App
 
-Things you may want to cover:
+This demo compares Puma and Falcon web servers. Follow these steps to run both servers and benchmark them using Locust:
 
-* Ruby version
+> **Note:** Each of the following commands should be run in its own terminal window/tab.
 
-* System dependencies
+### 1. Launch the Puma server (port 3001)
 
-* Configuration
+```
+./bin/puma-3001
+```
 
-* Database creation
+### 2. Launch the Falcon server (port 3002)
 
-* Database initialization
+```
+./bin/falcon-3002
+```
 
-* How to run the test suite
+### 3. Run Locust against Puma (port 3001)
 
-* Services (job queues, cache servers, search engines, etc.)
+```
+locust -f perf/locustfile.py --host=http://127.0.0.1:3001
+```
 
-* Deployment instructions
+This will start the Locust web UI at http://localhost:8089 by default.
 
-* ...
+### 4. Run Locust against Falcon (port 3002, web UI on port 8090)
+
+```
+locust -f perf/locustfile.py --host=http://127.0.0.1:3002 --web-port 8090
+```
+
+This will start the Locust web UI at http://localhost:8090.
+
+---
+
+You can now use the Locust web UI to start load tests and compare the performance of Puma and Falcon.
